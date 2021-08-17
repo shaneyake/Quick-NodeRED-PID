@@ -16,6 +16,7 @@ var ERROR =  PID_SETPOINT - Number(msg.payload);
 PID_INTEGRAL = PID_INTEGRAL + (ERROR*INTEGRAL_GAIN); 
 if(PID_INTEGRAL > INTEGRAL_MAX){ PID_INTEGRAL = INTEGRAL_MAX;}
 if(PID_INTEGRAL < INTEGRAL_MIN){ PID_INTEGRAL = INTEGRAL_MIN;}
+
     
 PID_OUTPUT = (ERROR*PROPORTIONAL_GAIN)+PID_INTEGRAL;
 
@@ -25,6 +26,6 @@ if(PID_OUTPUT < PID_MIN){ PID_OUTPUT = PID_MIN;}
 flow.set("PID_OUTPUT", PID_OUTPUT);
 flow.set("PID_INTEGRAL", PID_INTEGRAL);
 msg.payload =Math.round(PID_OUTPUT);
-node.status({PID_INTEGRAL});
+node.status({fill:"blue",shape:"dot",text:"OUTPUT: "+msg.payload +" P:"+Math.round(ERROR*PROPORTIONAL_GAIN)+" I:"+Math.round(PID_INTEGRAL)});
 
 return msg;
